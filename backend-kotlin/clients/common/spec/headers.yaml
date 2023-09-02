@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: Headers
+  description: Headers
+  version: 1.0.0
+
+paths: { }
+components:
+  parameters:
+    UidHeaderOptional:
+      in: header
+      name: Uid
+      schema:
+        type: string
+      required: false
+    IdempotencyTokenHeaderOptional:
+      in: header
+      name: Idempotency-Token
+      schema:
+        type: string
+      required: false
+  responses: { }

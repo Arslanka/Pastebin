@@ -1,0 +1,17 @@
+openapi: 3.0.0
+info:
+  title: Common
+  description: Common
+  version: 1.0.0
+
+paths: { }
+components:
+  schemas:
+    DateTimeType:
+      description: Date and type in ISO 8601 and RFC 3339 formats
+      type: string
+      format: date-time
+      example: '2023-08-28T19:08:48.372+0300'
+      x-json-pattern: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+      x-default-timezone: UTC
+  responses: { }
