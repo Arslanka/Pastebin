@@ -1,0 +1,100 @@
+openapi: 3.0.0
+
+info:
+  description: Pastebin service
+  title: Pastebin service
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:80
+    x-environment: test
+
+paths:
+  /v1/paste/add:
+    post:
+      description: |
+        Paste text data with link settings and get pre-signed link if succeeded
+      tags:
+        - pastebin
+      operationId: addPaste
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './definitions.yaml#/components/schemas/PasteAddRequest'
+      responses:
+        302:
+          description: Redirect for created paste
+        401:
+          $ref: '../../common/spec/responses.yaml#/components/responses/401'
+        403:
+          $ref: '../../common/spec/responses.yaml#/components/responses/403'
+
+  /v1/paste/get/{paste_id}:
+    get:
+      description: |
+        Get data via paste_id
+      tags:
+        - pastebin
+      operationId: getPaste
+      parameters:
+      - in: path
+        name: paste_id
+        required: true
+        schema:
+          $ref: './definitions.yaml#/components/schemas/PasteId'
+      security:
+        - bearerAuth: [ ]
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './definitions.yaml#/components/schemas/PasteGetResponse'
+        304:
+          description: Not modified
+        401:
+          $ref: '../../common/spec/responses.yaml#/components/responses/401'
+        403:
+          $ref: '../../common/spec/responses.yaml#/components/responses/403'
+        404:
+          $ref: '../../common/spec/responses.yaml#/components/responses/404'
+
+  /v1/paste/delete/{paste_id}:
+    delete:
+      description: |
+        Delete data via paste_id
+      tags:
+        - pastebin
+      operationId: deletePaste
+      parameters:
+        - in: path
+          name: paste_id
+          required: true
+          schema:
+            $ref: './definitions.yaml#/components/schemas/PasteId'
+      security:
+        - bearerAuth: [ ]
+      responses:
+        200:
+          description: OK
+        204:
+          description: No content
+        401:
+          $ref: '../../common/spec/responses.yaml#/components/responses/401'
+        403:
+          $ref: '../../common/spec/responses.yaml#/components/responses/403'
+        404:
+          $ref: '../../common/spec/responses.yaml#/components/responses/404'
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

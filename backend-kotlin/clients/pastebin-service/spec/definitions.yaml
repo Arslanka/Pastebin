@@ -1,0 +1,89 @@
+openapi: 3.0.0
+
+info:
+  description: Pastebin service
+  title: Pastebin service
+  version: 1.0.0
+
+paths: { }
+
+components:
+  schemas:
+    PasteAddRequest:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/PasteTitle'
+        visibility:
+          $ref: '#/components/schemas/ContentVisibility'
+        content:
+          $ref: '#/components/schemas/TextContent'
+        expiration_time:
+          $ref: '../../common/spec/common.yaml#/components/schemas/DateTimeType'
+        custom_paste_id:
+          $ref: '#/components/schemas/PasteId'
+      required:
+        - title
+        - visibility
+        - content
+
+    PasteAddResponse:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/PasteId'
+      required:
+        - id
+
+    PasteGetResponse:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/PasteTitle'
+        id:
+          $ref: '#/components/schemas/PasteId'
+        visibility:
+          $ref: '#/components/schemas/ContentVisibility'
+        created_at:
+          $ref: '../../common/spec/common.yaml#/components/schemas/DateTimeType'
+        expires_at:
+          $ref: '../../common/spec/common.yaml#/components/schemas/DateTimeType'
+        user:
+          type: string
+          example: Arslan
+        content:
+          $ref: '#/components/schemas/TextContent'
+      required:
+        - title
+        - id
+        - visibility
+        - created_at
+        - expires_at
+        - user
+        - content
+
+    TextContent:
+      type: object
+      description: Content with text UTF-8 format
+      properties:
+        data:
+          type: string
+      required:
+        - data
+
+    ContentVisibility:
+      description: Content visibility
+      enum:
+        - public
+        - private
+
+    PasteTitle:
+      description: Title of the paste
+      type: string
+      example: my paste
+
+    PasteId:
+      description: Unique short id of the paste
+      type: string
+      example: abcd1234
+  responses: { }
